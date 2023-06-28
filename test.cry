@@ -1,8 +1,8 @@
-_start:         ; Start of program
-    lda #15     ; Load 15 into A
-    ldb #5      ; Load 5 into B
+_start:
+    lda #54
+    ldb #38
 
-    add         ; Add A and B
-    output      ; Output A
+    add
+    out
 
-    hlt        ; Halt
+    hlt

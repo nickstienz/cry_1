@@ -7,26 +7,26 @@ fn main() {
 
     let args: Vec<String> = std::env::args().collect();
     if args.len() < 2 {
-        println!("Usage: cry-1 <file>");
+        println!("Usage: cry-1 [filename] [options]");
         std::process::exit(1);
     }
     let filename = &args[1];
-    println!("Assembling file: {}", filename);
 
-    let contents_result = std::fs::read_to_string(filename);
-    let contents = match contents_result {
+    // Read the file and handle the common errors using a match statement
+    let contents = match std::fs::read_to_string(filename) {
         Ok(contents) => contents,
-        Err(err) => match err.kind() {
+        // Handle common errors
+        Err(error) => match error.kind() {
             std::io::ErrorKind::NotFound => {
-                println!("Error: File not found: {}", filename);
+                println!("Error: File {} not found", filename);
                 std::process::exit(1);
             }
             std::io::ErrorKind::PermissionDenied => {
-                println!("Error: Permission denied: {}", filename);
+                println!("Error: Permission denied for file {}", filename);
                 std::process::exit(1);
             }
             _ => {
-                println!("Error: Can not read file: {}", filename);
+                println!("Something went wrong reading file {}: {}", filename, error);
                 std::process::exit(1);
             }
         },
@@ -36,6 +36,12 @@ fn main() {
     for line in contents.lines() {
         program.push(line.to_string().trim().to_string());
     }
+
+    #[cfg(debug_assertions)]
+    {
+        println!("Program In: {:?}\n", program);
+    }
+
     program.retain(|line| !line.is_empty() && !line.starts_with(';'));
     for line in program.iter_mut() {
         if let Some(index) = line.find(';') {
@@ -55,40 +61,72 @@ fn main() {
 
     #[cfg(debug_assertions)]
     {
-        println!("Index: {}", start_index);
-        println!("Program: {:#?}", program);
+        println!("Program Processed (1): {:?}\n", program);
+        println!("Start Index: {}\n", start_index);
     }
 
-    let mut new_program: Vec<Instructions> = Vec::with_capacity(program.len());
-    program.iter().for_each(|line| {
-        let mut tokens = line.split_whitespace();
-        let instruction = tokens.next().unwrap();
-
-        let data = if let Some(token) = tokens.next() {
-            let data = token.strip_prefix('#').unwrap().parse::<u8>();
-            let data = match data {
-                Ok(data) => data,
-                Err(err) => {
-                    println!("Error: Invalid data: {}", err);
-                    std::process::exit(1);
-                }
-            };
-            data
+    for i in 0..program.len() {
+        let line = &mut program[i];
+        let tokens: Vec<&str> = line.split_whitespace().collect();
+        if tokens.len() < 2 {
+            let opcode = Instruction::opcode_from_string(tokens[0]);
+            *line = format!("{}", opcode << 4);
         } else {
-            0
-        };
-
-        let instruction = instructions::get_instruction(instruction, data);
-        new_program.push(instruction);
-    });
-    let program = new_program;
+            let opcode = Instruction::opcode_from_string(tokens[0]);
+            let operand = tokens[1].strip_prefix('#').unwrap().parse::<u8>().unwrap();
+            *line = format!("{} #{}", opcode, operand);
+        }
+    }
 
     #[cfg(debug_assertions)]
     {
-        println!("Program: {:?}", program);
+        println!("Program Processed (2): {:?}\n", program);
     }
 
-    /* This was just a test program to see some stuff */
-    /* None of this does anything important */
-    /* This program will be rewritten to work when I have time :) */
+    let mut new_elements = Vec::new();
+
+    for i in 0..program.len() {
+        if let Some(index) = program[i].find('#') {
+            let (opcode, operand) = {
+                let (opcode, operand) = program[i].split_at(index);
+                (opcode, operand.to_string())
+            };
+            new_elements.push(operand[1..].to_string());
+            let operand_index = program.len() - 1 + new_elements.len();
+            program[i] = format!("{} {}", opcode, operand_index);
+        }
+    }
+
+    program.extend(new_elements);
+
+    #[cfg(debug_assertions)]
+    {
+        println!("Program Processed (3): {:?}\n", program);
+    }
+
+    for line in program.iter_mut() {
+        let tokens: Vec<&str> = line.split_whitespace().collect();
+        let opcode = tokens[0].parse::<u8>().unwrap();
+        if tokens.len() == 1 {
+            *line = format!("{:08b}", opcode);
+            continue;
+        }
+        let operand = tokens[1].parse::<u8>().unwrap();
+        *line = format!("{:04b}{:04b}", opcode, operand);
+    }
+
+    #[cfg(debug_assertions)]
+    {
+        println!("Program Complete: {:#?}", program);
+    }
+
+    let mut output = String::new();
+    for i in 0..program.len() {
+        output.push_str(&program[i]);
+        if i != program.len() - 1 {
+            output.push('\n');
+        }
+    }
+
+    println!("Output:\n{}", output);
 }
