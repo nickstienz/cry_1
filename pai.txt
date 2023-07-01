@@ -1,0 +1,15 @@
+=== Patterns ===
+
+@label:start
+/^_start:/gm
+
+lda @ref_eop:10
+/^\s*(lda)\s*#((?:25[0-5])|(?:2[0-4]\d)|(?:1\d{2})|(?:[1-9]\d?|0))(?![0-9a-fA-F])/gm
+lda @ref_eop:2
+/^\s*(lda)\s*0b([01]{8})(?![0-9a-fA-F])/gm
+lda @ref_eop:16
+/^\s*(lda)\s*0x([0-9A-Fa-f]{1,2})(?![0-9A-Fa-f])/gm
+
+=== Instructions ===
+
+lda 0001

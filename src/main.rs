@@ -51,4 +51,8 @@ fn main() {
     {
         println!("Program Processed (1): {:?}\n", program);
     }
+
+    // program: Vec<String> can be used now.
+
+    Instruction::create_pai_data(); // This needs to happen before the program is parsed.
 }
