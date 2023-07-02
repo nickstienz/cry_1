@@ -54,5 +54,11 @@ fn main() {
 
     // program: Vec<String> can be used now.
 
-    Instruction::create_pai_data(); // This needs to happen before the program is parsed.
+    // This needs to happen before the program is parsed.
+    let pai = Instruction::create_pai_data();
+
+    #[cfg(debug_assertions)]
+    {
+        println!("PAI: {:?}\n", pai);
+    }
 }
