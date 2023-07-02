@@ -1,8 +1,6 @@
 _start:
     lda #54
-    ldb #38
+    add #38
 
-    add
     out
-
     hlt
