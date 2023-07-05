@@ -26,7 +26,7 @@ pub struct Instruction {
 }
 
 impl Instruction {
-    pub fn _new(opcode_literal: String, operand_literal: String) -> Self {
+    pub fn new(opcode_literal: String, operand_literal: String) -> Self {
         Self {
             opcode_literal,
             operand_literal,
