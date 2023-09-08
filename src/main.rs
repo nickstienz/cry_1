@@ -1,9 +1,12 @@
-mod instructions;
-use instructions::*;
+mod lexer;
+mod token;
+use lexer::*;
+
+use crate::token::TokenType;
 
 fn main() {
     // This will be the assembler for the CRY-1 Computer so buckle up and enjoy your ride to hell!
-    println!("=== CRY-1 Assembler v0.1.0 by Nicholas Stienz ===");
+    println!("=== CRY-1 Assembler v0.2.0 by Nicholas Stienz ===");
 
     let args: Vec<String> = std::env::args().collect();
     if args.len() < 2 {
@@ -30,35 +33,18 @@ fn main() {
         },
     };
 
-    let mut program: Vec<String> = Vec::with_capacity(contents.lines().count());
-    for line in contents.lines() {
-        program.push(line.to_string().trim().to_string());
-    }
+    let mut lexer = Lexer::new(contents);
 
-    #[cfg(debug_assertions)]
-    {
-        println!("Program In: {:?}\n", program);
-    }
-
-    program.retain(|line| !line.is_empty() && !line.starts_with(';'));
-    for line in program.iter_mut() {
-        if let Some(index) = line.find(';') {
-            *line = line[..index].to_string().trim().to_string();
+    loop {
+        let token = lexer.next();
+        match token.token_type {
+            TokenType::EOF => {
+                println!("{:?}", token);
+                break;
+            },
+            _ => {
+                println!("{:?}", token);
+            }
         }
-    }
-
-    #[cfg(debug_assertions)]
-    {
-        println!("Program Processed (1): {:?}\n", program);
-    }
-
-    // program: Vec<String> can be used now.
-
-    // This needs to happen before the program is parsed.
-    let pai = Instruction::create_pai_data();
-
-    #[cfg(debug_assertions)]
-    {
-        println!("PAI: {:?}\n", pai);
     }
 }
