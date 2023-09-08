@@ -17,64 +17,70 @@ impl Lexer {
         }
     }
 
-    pub fn next(&mut self) -> Token {
-        if self.position >= self.contents.len() {
-            return Token {
-                token_type: TokenType::EOF,
-                line: self.line,
-                col: self.col,
-            };
+    pub fn next(&mut self) -> Option<Token> {
+        let mut passed_checks = false;
+        while passed_checks == false {
+            if self.position >= self.contents.len() {
+                return None;
+            }
+            passed_checks = self.clear_redundent_characters();
+        }
+
+        Some(self.consume_token())
+    }
+
+    fn clear_redundent_characters(&mut self) -> bool {
+        let mut passes_checks = true;
+
+        let current_character = self.contents.chars().nth(self.position).unwrap();
+
+        if current_character == '\n' {
+            passes_checks = false;
+            while let Some(next_character) = self.contents.chars().nth(self.position) {
+                if next_character == '\n' {
+                    self.line += 1;
+                    self.position += 1;
+                    self.col = 0;
+                } else {
+                    break;
+                }
+            }
         }
 
         let current_character = self.contents.chars().nth(self.position).unwrap();
-        self.position += 1;
-        self.col += 1;
-
-        if current_character == '\n' {
-            self.line += 1;
-            self.col = 0;
-            Token {
-                token_type: TokenType::Linebreak,
-                line: self.line,
-                col: self.col,
-            }
-        } else if current_character.is_whitespace() {
-            let start = self.col;
-            while let Some(next_char) = self.contents.chars().nth(self.position) {
-                if next_char.is_whitespace() {
+        if current_character.is_whitespace() {
+            passes_checks = false;
+            while let Some(next_character) = self.contents.chars().nth(self.position) {
+                if next_character.is_whitespace() {
                     self.position += 1;
                     self.col += 1;
                 } else {
                     break;
                 }
             }
-            Token {
-                token_type: TokenType::Whitespace,
-                line: self.line,
-                col: start,
-            }
-        } else if current_character == ';' {
-            let start = self.col;
-            let mut comment = String::new();
-            comment.push(current_character);
+        }
 
+        let current_character = self.contents.chars().nth(self.position).unwrap();
+        if current_character == ';' {
+            passes_checks = false;
             while let Some(next_character) = self.contents.chars().nth(self.position) {
                 if next_character == '\n' {
                     break;
                 }
-                comment.push(next_character);
                 self.position += 1;
                 self.col += 1;
             }
+        }
 
-            Token {
-                token_type: TokenType::Comment(comment),
-                line: self.line,
-                col: start,
-            }
-        } else if current_character.is_alphabetic()
-            || current_character == '_'
-            || current_character == ':'
+        passes_checks
+    }
+
+    fn consume_token(&mut self) -> Token {
+        let current_character = self.contents.chars().nth(self.position).unwrap();
+        self.position += 1;
+        self.col += 1;
+
+        if current_character.is_alphabetic() || current_character == '_' || current_character == ':'
         {
             let start = self.col;
             let mut lexeme = String::new();
@@ -120,7 +126,7 @@ impl Lexer {
             }
 
             Token {
-                token_type: TokenType::IntegerLiteral(lexeme),
+                token_type: TokenType::IntegerLiteral(lexeme.parse::<u8>().unwrap()),
                 line: self.line,
                 col: start,
             }

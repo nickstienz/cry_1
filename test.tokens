@@ -1,29 +1,7 @@
 Token { token_type: Label("_start:"), line: 1, col: 1 }
-Token { token_type: Whitespace, line: 1, col: 8 }
-Token { token_type: Comment("; Entry Point"), line: 1, col: 16 }
-Token { token_type: Linebreak, line: 2, col: 0 }
-Token { token_type: Whitespace, line: 2, col: 1 }
 Token { token_type: Instruction("lda"), line: 2, col: 5 }
-Token { token_type: Whitespace, line: 2, col: 8 }
-Token { token_type: IntegerLiteral("54"), line: 2, col: 9 }
-Token { token_type: Whitespace, line: 2, col: 11 }
-Token { token_type: Comment("; Load 54 into reg. A"), line: 2, col: 16 }
-Token { token_type: Linebreak, line: 3, col: 0 }
-Token { token_type: Whitespace, line: 3, col: 1 }
+Token { token_type: IntegerLiteral(54), line: 2, col: 9 }
 Token { token_type: Instruction("add"), line: 3, col: 5 }
-Token { token_type: Whitespace, line: 3, col: 8 }
-Token { token_type: IntegerLiteral("38"), line: 3, col: 9 }
-Token { token_type: Whitespace, line: 3, col: 11 }
-Token { token_type: Comment("; Add 38 to reg. A"), line: 3, col: 16 }
-Token { token_type: Linebreak, line: 4, col: 0 }
-Token { token_type: Linebreak, line: 5, col: 0 }
-Token { token_type: Whitespace, line: 5, col: 1 }
+Token { token_type: IntegerLiteral(38), line: 3, col: 9 }
 Token { token_type: Instruction("out"), line: 5, col: 5 }
-Token { token_type: Whitespace, line: 5, col: 8 }
-Token { token_type: Comment("; Output to the 7 seg."), line: 5, col: 16 }
-Token { token_type: Linebreak, line: 6, col: 0 }
-Token { token_type: Whitespace, line: 6, col: 1 }
 Token { token_type: Instruction("hlt"), line: 6, col: 5 }
-Token { token_type: Whitespace, line: 6, col: 8 }
-Token { token_type: Comment("; Stop computer"), line: 6, col: 16 }
-Token { token_type: EOF, line: 6, col: 30 }

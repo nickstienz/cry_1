@@ -2,13 +2,7 @@
 pub enum TokenType {
     Label(String),
     Instruction(String),
-    IntegerLiteral(String),
-    
-    Comment(String),
-    Whitespace,
-    Linebreak,
-
-    EOF,
+    IntegerLiteral(u8),
     Error(String),
 }
 
