@@ -1,6 +1,8 @@
 mod lexer;
 mod token;
+
 use lexer::*;
+use crate::token::Token;
 
 fn main() {
     // This will be the assembler for the CRY-1 Computer so buckle up and enjoy your ride to hell!
@@ -21,9 +23,8 @@ fn main() {
         }
     };
 
-    let mut lexer = Lexer::new(contents);
+    let lexer = Lexer::new(contents);
+    let tokens: Vec<Token> = lexer.filter_map(|t| Some(t)).collect();
 
-    while let Some(token) = lexer.next() {
-        println!("{:?}", token);
-    }
+    println!("{:#?}", tokens);
 }

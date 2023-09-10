@@ -7,17 +7,9 @@ pub struct Lexer {
     position: usize,
 }
 
-impl Lexer {
-    pub fn new(contents: String) -> Lexer {
-        Lexer {
-            contents,
-            line: 1,
-            col: 0,
-            position: 0,
-        }
-    }
-
-    pub fn next(&mut self) -> Option<Token> {
+impl Iterator for Lexer {
+    type Item = Token;
+    fn next(&mut self) -> Option<Token> {
         let mut passed_checks = false;
         while passed_checks == false {
             if self.position >= self.contents.len() {
@@ -27,6 +19,17 @@ impl Lexer {
         }
 
         Some(self.consume_token())
+    }
+}
+
+impl Lexer {
+    pub fn new(contents: String) -> Lexer {
+        Lexer {
+            contents,
+            line: 1,
+            col: 0,
+            position: 0,
+        }
     }
 
     fn clear_redundent_characters(&mut self) -> bool {
