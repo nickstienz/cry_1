@@ -1,12 +1,18 @@
-add_y:
-    add y
-    ret
-start:
-    lda x
-    jmp add_y
-
+; This program multiplies x and y
+; First I need to rework token.rs
+loop:
+    lda prod
+    add x
+    sta prod
+    lda y
+    sub 1
+    jz end
+    sta y
+    jmp loop
+end:
     out
     hlt
 
-.x 54
-.y 38
+.x 5
+.y 3
+.prod 0
