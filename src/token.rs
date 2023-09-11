@@ -29,7 +29,7 @@ impl Token {
         }
     }
 
-    pub fn to_binary(&self) -> String {
+    pub fn _to_binary(&self) -> String {
         match &self.token_type {
             TokenType::Instruction(instr) => match instr.as_str() {
                 "hlt" => String::from("0000"),
