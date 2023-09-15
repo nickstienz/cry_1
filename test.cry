@@ -1,5 +1,4 @@
 ; This program multiplies x and y
-; First I need to rework token.rs
 loop:
     lda prod
     add x

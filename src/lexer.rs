@@ -17,7 +17,15 @@ impl Lexer {
         }
     }
 
-    pub fn next(&mut self) -> Option<Token> {
+    pub fn lex(&mut self) -> Vec<Token> {
+        let mut program: Vec<Token> = Vec::new();
+        while let Some(token) = self.next() {
+            program.push(token);
+        }
+        program
+    }
+
+    fn next(&mut self) -> Option<Token> {
         let mut passed_checks = false;
         while passed_checks == false {
             if self.position >= self.contents.len() {
@@ -127,7 +135,7 @@ impl Lexer {
                         token_type: TokenType::Expression(lexeme),
                         line: self.line,
                         col: start,
-                    } 
+                    }
                 }
             }
         } else if current_character.is_digit(10) {

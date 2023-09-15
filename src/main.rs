@@ -1,5 +1,6 @@
 mod lexer;
 mod token;
+mod parser;
 
 use lexer::*;
 
@@ -33,11 +34,10 @@ fn main() {
     }
 
     let mut lexer = Lexer::new(contents);
+    let program = lexer.lex();
 
     if option == "--tokens" || option == "-t" || option == "tokens" {
-        while let Some(token) = lexer.next() {
-            println!("{:?}", token);
-        }
+        program.iter().for_each(|t| println!("{:?}", t));
         std::process::exit(0);
     }
 }
