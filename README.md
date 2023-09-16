@@ -1,4 +1,9 @@
 # CRY-1
-This is the programming behind my custom 8-Bit computer (Ben Eater Design). It's named CRY-1 because I have cried more than once trying to build this s***.
+This is the assembler for my custom CPU (Ben Eater Design). Made by Nicholas Stienz
 
-<3 Ben Eater
+## CLI
+**Help:** cry_1 help
+
+**Assemble:** cry_1 [filename]
+
+**Get Tokens:** cry_1 [filename] (-t, --tokens, tokens)

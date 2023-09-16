@@ -26,61 +26,58 @@ impl Lexer {
     }
 
     fn next(&mut self) -> Option<Token> {
-        let mut passed_checks = false;
-        while passed_checks == false {
-            if self.position >= self.contents.len() {
-                return None;
+        while !self.is_end_of_file() {
+            if self.clear_redundent_characters() {
+                return Some(self.consume_token());
             }
-            passed_checks = self.clear_redundent_characters();
         }
+        None
+    }
 
-        Some(self.consume_token())
+    fn is_end_of_file(&self) -> bool {
+        self.position >= self.contents.len()
     }
 
     fn clear_redundent_characters(&mut self) -> bool {
-        let mut passes_checks = true;
-
-        let current_character = self.contents.chars().nth(self.position).unwrap();
+        let current_character = self.peek_character();
 
         if current_character == '\n' {
-            passes_checks = false;
+            self.skip_character('\n');
+        } else if current_character.is_whitespace() {
+            self.skip_character(' ');
+        } else if current_character == ';' {
             while let Some(next_character) = self.contents.chars().nth(self.position) {
                 if next_character == '\n' {
-                    self.line += 1;
-                    self.position += 1;
-                    self.col = 0;
-                } else {
-                    break;
-                }
-            }
-        }
-
-        let current_character = self.contents.chars().nth(self.position).unwrap();
-        if current_character.is_whitespace() {
-            passes_checks = false;
-            while let Some(next_character) = self.contents.chars().nth(self.position) {
-                if next_character.is_whitespace() {
-                    self.position += 1;
-                    self.col += 1;
-                } else {
-                    break;
-                }
-            }
-        }
-
-        let current_character = self.contents.chars().nth(self.position).unwrap();
-        if current_character == ';' {
-            passes_checks = false;
-            while let Some(next_character) = self.contents.chars().nth(self.position) {
-                if next_character == '\n' {
-                    break;
+                    return false;
                 }
                 self.position += 1;
                 self.col += 1;
             }
+        } else {
+            return false;
         }
 
-        passes_checks
+        return true;
+    }
+
+    fn peek_character(&self) -> char {
+        self.contents.chars().nth(self.position).unwrap()
+    }
+
+    fn skip_character(&mut self, target: char) {
+        while let Some(next_character) = self.contents.chars().nth(self.position) {
+            if next_character != target {
+                break;
+            }
+
+            if next_character == '\n' {
+                self.line += 1;
+                self.col = 0;
+            } else {
+                self.col += 1;
+            }
+            self.position += 1;
+        }
     }
 
     fn consume_token(&mut self) -> Token {
