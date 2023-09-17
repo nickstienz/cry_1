@@ -7,3 +7,6 @@ This is the assembler for my custom CPU (Ben Eater Design). Made by Nicholas Sti
 **Assemble:** cry_1 [filename]
 
 **Get Tokens:** cry_1 [filename] (-t, --tokens, tokens)
+
+**Get AST:** cry_1 [filename] (-a, --ast, ast)
+

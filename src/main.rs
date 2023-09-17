@@ -1,8 +1,11 @@
+mod ast;
 mod lexer;
 mod parser;
 mod token;
 
 use lexer::*;
+use parser::Parser;
+use token::Token;
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
@@ -34,10 +37,18 @@ fn main() {
     }
 
     let mut lexer = Lexer::new(contents);
-    let program = lexer.lex();
+    let tokens: Vec<Token> = lexer.lex();
 
     if option == "--tokens" || option == "-t" || option == "tokens" {
-        program.iter().for_each(|t| println!("{:?}", t));
+        tokens.iter().for_each(|t| println!("{:?}", t));
+        std::process::exit(0);
+    }
+
+    let mut parser = Parser::new(tokens);
+    let ast = parser.parse();
+
+    if option == "--ast" || option == "-a" || option == "ast" {
+        println!("{:#?}", ast);
         std::process::exit(0);
     }
 }

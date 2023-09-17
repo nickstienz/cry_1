@@ -8,7 +8,7 @@ pub struct Lexer {
 }
 
 impl Lexer {
-    pub fn new(contents: String) -> Lexer {
+    pub fn new(contents: String) -> Self {
         Lexer {
             contents,
             line: 1,

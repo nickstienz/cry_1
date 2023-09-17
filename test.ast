@@ -1,0 +1,158 @@
+Program {
+    statements: [
+        LabelStatement(
+            Label {
+                name: "loop:",
+                line: 2,
+                col: 1,
+            },
+        ),
+        InstructionStatement(
+            Instruction {
+                name: "lda",
+                operand: Expression(
+                    "prod",
+                    3,
+                    9,
+                ),
+                line: 3,
+                col: 5,
+            },
+        ),
+        InstructionStatement(
+            Instruction {
+                name: "add",
+                operand: Expression(
+                    "x",
+                    4,
+                    9,
+                ),
+                line: 4,
+                col: 5,
+            },
+        ),
+        InstructionStatement(
+            Instruction {
+                name: "sta",
+                operand: Expression(
+                    "prod",
+                    5,
+                    9,
+                ),
+                line: 5,
+                col: 5,
+            },
+        ),
+        InstructionStatement(
+            Instruction {
+                name: "lda",
+                operand: Expression(
+                    "y",
+                    6,
+                    9,
+                ),
+                line: 6,
+                col: 5,
+            },
+        ),
+        InstructionStatement(
+            Instruction {
+                name: "sub",
+                operand: Int(
+                    1,
+                    7,
+                    9,
+                ),
+                line: 7,
+                col: 5,
+            },
+        ),
+        InstructionStatement(
+            Instruction {
+                name: "jz",
+                operand: Expression(
+                    "end",
+                    8,
+                    8,
+                ),
+                line: 8,
+                col: 5,
+            },
+        ),
+        InstructionStatement(
+            Instruction {
+                name: "sta",
+                operand: Expression(
+                    "y",
+                    9,
+                    9,
+                ),
+                line: 9,
+                col: 5,
+            },
+        ),
+        InstructionStatement(
+            Instruction {
+                name: "jmp",
+                operand: Expression(
+                    "loop",
+                    10,
+                    9,
+                ),
+                line: 10,
+                col: 5,
+            },
+        ),
+        LabelStatement(
+            Label {
+                name: "end:",
+                line: 11,
+                col: 1,
+            },
+        ),
+        InstructionStatement(
+            Instruction {
+                name: "out",
+                operand: None,
+                line: 12,
+                col: 5,
+            },
+        ),
+        VariableStatement(
+            Variable {
+                name: ".x",
+                value: Int(
+                    5,
+                    15,
+                    4,
+                ),
+                line: 15,
+                col: 1,
+            },
+        ),
+        VariableStatement(
+            Variable {
+                name: ".y",
+                value: Int(
+                    3,
+                    16,
+                    4,
+                ),
+                line: 16,
+                col: 1,
+            },
+        ),
+        VariableStatement(
+            Variable {
+                name: ".prod",
+                value: Int(
+                    0,
+                    17,
+                    7,
+                ),
+                line: 17,
+                col: 1,
+            },
+        ),
+    ],
+}
