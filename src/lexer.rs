@@ -27,7 +27,7 @@ impl Lexer {
 
     fn next(&mut self) -> Option<Token> {
         while !self.is_end_of_file() {
-            if self.clear_redundent_characters() {
+            if self.clear_redundent_characters() && !self.peek_character().is_whitespace() {
                 return Some(self.consume_token());
             }
         }
@@ -54,6 +54,10 @@ impl Lexer {
                 self.col += 1;
             }
         } else {
+            println!(
+                "[i] Char({}) Line:{} Col: {}",
+                current_character, self.line, self.col
+            );
             return false;
         }
 
@@ -65,12 +69,12 @@ impl Lexer {
     }
 
     fn skip_character(&mut self, target: char) {
-        while let Some(next_character) = self.contents.chars().nth(self.position) {
-            if next_character != target {
+        while let Some(current_character) = self.contents.chars().nth(self.position) {
+            if current_character != target {
                 break;
             }
 
-            if next_character == '\n' {
+            if current_character == '\n' {
                 self.line += 1;
                 self.col = 0;
             } else {

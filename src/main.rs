@@ -1,6 +1,6 @@
 mod lexer;
-mod token;
 mod parser;
+mod token;
 
 use lexer::*;
 
