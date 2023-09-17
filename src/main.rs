@@ -59,4 +59,5 @@ fn help() {
     println!("Options:");
     println!("Help:\t\t--help, -h, help\t\t- Prints this help message.");
     println!("Tokens:\t\t--tokens, -t, tokens\t\t- Prints all the tokens found in the program.");
+    println!("AST:\t\t--ast, -a, ast\t\t\t- Prints the AST from the tokens.");
 }
