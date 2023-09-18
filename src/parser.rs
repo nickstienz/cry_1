@@ -24,7 +24,7 @@ impl Parser {
             match &token.token_type {
                 TokenType::Label(label) => {
                     symbols.push(ast::Symbol {
-                        identifier: label.to_owned(),
+                        identifier: label.to_owned()[..label.len() - 1].to_string(),
                         address: instruction_pointer,
                     });
                     statements.push(ast::Statement::Label {
@@ -67,7 +67,7 @@ impl Parser {
                         _ => panic!("No int found after var!"),
                     };
                     symbols.push(ast::Symbol {
-                        identifier: name.to_owned(),
+                        identifier: name.to_owned()[1..].to_string(),
                         address: variable_pointer,
                     });
                     variable_pointer -= 1;

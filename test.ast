@@ -129,23 +129,23 @@ Program {
     ],
     symbols: [
         Symbol {
-            identifier: "loop:",
+            identifier: "loop",
             address: 0,
         },
         Symbol {
-            identifier: "end:",
+            identifier: "end",
             address: 8,
         },
         Symbol {
-            identifier: ".x",
+            identifier: "x",
             address: 15,
         },
         Symbol {
-            identifier: ".y",
+            identifier: "y",
             address: 14,
         },
         Symbol {
-            identifier: ".prod",
+            identifier: "prod",
             address: 13,
         },
     ],
