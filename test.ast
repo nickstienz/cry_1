@@ -1,158 +1,152 @@
 Program {
     statements: [
-        LabelStatement(
-            Label {
-                name: "loop:",
-                line: 2,
-                col: 1,
-            },
-        ),
-        InstructionStatement(
-            Instruction {
-                name: "lda",
-                operand: Expression(
-                    "prod",
-                    3,
-                    9,
-                ),
+        Label {
+            name: "loop:",
+            line: 2,
+            col: 1,
+        },
+        Instruction {
+            literal: "lda",
+            operand: Expression {
+                literal: "prod",
                 line: 3,
-                col: 5,
+                col: 9,
             },
-        ),
-        InstructionStatement(
-            Instruction {
-                name: "add",
-                operand: Expression(
-                    "x",
-                    4,
-                    9,
-                ),
+            line: 3,
+            col: 5,
+        },
+        Instruction {
+            literal: "add",
+            operand: Expression {
+                literal: "x",
                 line: 4,
-                col: 5,
+                col: 9,
             },
-        ),
-        InstructionStatement(
-            Instruction {
-                name: "sta",
-                operand: Expression(
-                    "prod",
-                    5,
-                    9,
-                ),
+            line: 4,
+            col: 5,
+        },
+        Instruction {
+            literal: "sta",
+            operand: Expression {
+                literal: "prod",
                 line: 5,
-                col: 5,
+                col: 9,
             },
-        ),
-        InstructionStatement(
-            Instruction {
-                name: "lda",
-                operand: Expression(
-                    "y",
-                    6,
-                    9,
-                ),
+            line: 5,
+            col: 5,
+        },
+        Instruction {
+            literal: "lda",
+            operand: Expression {
+                literal: "y",
                 line: 6,
-                col: 5,
+                col: 9,
             },
-        ),
-        InstructionStatement(
-            Instruction {
-                name: "sub",
-                operand: Int(
-                    1,
-                    7,
-                    9,
-                ),
+            line: 6,
+            col: 5,
+        },
+        Instruction {
+            literal: "sub",
+            operand: Int {
+                literal: 1,
                 line: 7,
-                col: 5,
+                col: 9,
             },
-        ),
-        InstructionStatement(
-            Instruction {
-                name: "jz",
-                operand: Expression(
-                    "end",
-                    8,
-                    8,
-                ),
+            line: 7,
+            col: 5,
+        },
+        Instruction {
+            literal: "jz",
+            operand: Expression {
+                literal: "end",
                 line: 8,
-                col: 5,
+                col: 8,
             },
-        ),
-        InstructionStatement(
-            Instruction {
-                name: "sta",
-                operand: Expression(
-                    "y",
-                    9,
-                    9,
-                ),
+            line: 8,
+            col: 5,
+        },
+        Instruction {
+            literal: "sta",
+            operand: Expression {
+                literal: "y",
                 line: 9,
-                col: 5,
+                col: 9,
             },
-        ),
-        InstructionStatement(
-            Instruction {
-                name: "jmp",
-                operand: Expression(
-                    "loop",
-                    10,
-                    9,
-                ),
+            line: 9,
+            col: 5,
+        },
+        Instruction {
+            literal: "jmp",
+            operand: Expression {
+                literal: "loop",
                 line: 10,
-                col: 5,
+                col: 9,
             },
-        ),
-        LabelStatement(
-            Label {
-                name: "end:",
-                line: 11,
-                col: 1,
-            },
-        ),
-        InstructionStatement(
-            Instruction {
-                name: "out",
-                operand: None,
-                line: 12,
-                col: 5,
-            },
-        ),
-        VariableStatement(
-            Variable {
-                name: ".x",
-                value: Int(
-                    5,
-                    15,
-                    4,
-                ),
+            line: 10,
+            col: 5,
+        },
+        Label {
+            name: "end:",
+            line: 11,
+            col: 1,
+        },
+        Instruction {
+            literal: "out",
+            operand: None,
+            line: 12,
+            col: 5,
+        },
+        Variable {
+            name: ".x",
+            value: Int {
+                literal: 5,
                 line: 15,
-                col: 1,
+                col: 4,
             },
-        ),
-        VariableStatement(
-            Variable {
-                name: ".y",
-                value: Int(
-                    3,
-                    16,
-                    4,
-                ),
+            line: 15,
+            col: 1,
+        },
+        Variable {
+            name: ".y",
+            value: Int {
+                literal: 3,
                 line: 16,
-                col: 1,
+                col: 4,
             },
-        ),
-        VariableStatement(
-            Variable {
-                name: ".prod",
-                value: Int(
-                    0,
-                    17,
-                    7,
-                ),
+            line: 16,
+            col: 1,
+        },
+        Variable {
+            name: ".prod",
+            value: Int {
+                literal: 0,
                 line: 17,
-                col: 1,
+                col: 7,
             },
-        ),
+            line: 17,
+            col: 1,
+        },
+    ],
+    symbols: [
+        Symbol {
+            identifier: "loop:",
+            address: 0,
+        },
+        Symbol {
+            identifier: "end:",
+            address: 8,
+        },
+        Symbol {
+            identifier: ".x",
+            address: 15,
+        },
+        Symbol {
+            identifier: ".y",
+            address: 14,
+        },
+        Symbol {
+            identifier: ".prod",
+            address: 13,
+        },
     ],
 }

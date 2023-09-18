@@ -1,41 +1,47 @@
 #[derive(Debug)]
 pub struct Program {
     pub statements: Vec<Statement>,
+    pub symbols: Vec<Symbol>,
 }
 
 #[derive(Debug)]
 pub enum Statement {
-    LabelStatement(Label),
-    InstructionStatement(Instruction),
-    VariableStatement(Variable),
-}
-
-#[derive(Debug)]
-pub struct Label {
-    pub name: String,
-    pub line: usize,
-    pub col: usize,
-}
-
-#[derive(Debug)]
-pub struct Variable {
-    pub name: String,
-    pub value: Operand,
-    pub line: usize,
-    pub col: usize,
-}
-
-#[derive(Debug)]
-pub struct Instruction {
-    pub name: String,
-    pub operand: Operand,
-    pub line: usize,
-    pub col: usize,
+    Label {
+        name: String,
+        line: usize,
+        col: usize,
+    },
+    Instruction {
+        literal: String,
+        operand: Operand,
+        line: usize,
+        col: usize,
+    },
+    Variable {
+        name: String,
+        value: Operand,
+        line: usize,
+        col: usize,
+    },
 }
 
 #[derive(Debug)]
 pub enum Operand {
-    Expression(String, usize, usize),
-    Int(u8, usize, usize),
+    Expression {
+        literal: String,
+        line: usize,
+        col: usize,
+    },
+    Int {
+        literal: u8,
+        line: usize,
+        col: usize,
+    },
     None,
+}
+
+#[derive(Debug)]
+pub struct Symbol {
+    pub identifier: String,
+    pub address: u8,
 }
