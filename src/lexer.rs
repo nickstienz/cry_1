@@ -11,7 +11,7 @@ impl Lexer {
     pub fn new(contents: String) -> Self {
         Lexer {
             contents,
-            line: 1,
+            line: 0,
             col: 0,
             position: 0,
         }
@@ -54,10 +54,6 @@ impl Lexer {
                 self.col += 1;
             }
         } else {
-            println!(
-                "[i] Char({}) Line:{} Col: {}",
-                current_character, self.line, self.col
-            );
             return false;
         }
 

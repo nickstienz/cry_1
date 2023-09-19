@@ -1,4 +1,5 @@
 mod ast;
+mod codegen;
 mod lexer;
 mod parser;
 mod token;
@@ -6,6 +7,8 @@ mod token;
 use lexer::*;
 use parser::Parser;
 use token::Token;
+
+use crate::codegen::Codegen;
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
@@ -51,6 +54,11 @@ fn main() {
         println!("{:#?}", ast);
         std::process::exit(0);
     }
+
+    let mut codegen = Codegen::new(ast);
+    let output = codegen.generate();
+
+    output.iter().for_each(|l| println!("{}", l));
 }
 
 fn help() {

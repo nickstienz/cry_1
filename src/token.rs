@@ -41,14 +41,15 @@ macro_rules! instructions {
                 }
             }
 
-            pub fn _to_binary(&self) -> String {
-                match &self.token_type {
-                    TokenType::Instruction(instr) => match instr.as_str() {
+            pub fn to_binary(literal: &String) -> String {
+                let literal = literal.as_str();
+                if Token::is_instruction(literal) {
+                    match literal {
                         $(stringify!($instr) => stringify!($binary).to_string(),)*
-                        _ => panic!("Instruction not found: {}", instr),
-                    },
-                    TokenType::IntegerLiteral(num) => format!("{:08b}", num),
-                    _ => panic!("Token can not be converted to binary: {:?}", self),
+                        _ => panic!("Instruction not found: {}", literal),
+                    }
+                } else {
+                    return format!("{:08b}", literal.parse::<u8>().unwrap());
                 }
             }
         }

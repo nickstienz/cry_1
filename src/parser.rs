@@ -28,7 +28,7 @@ impl Parser {
                         address: instruction_pointer,
                     });
                     statements.push(ast::Statement::Label {
-                        name: label.to_owned(),
+                        name: label.to_owned()[..label.len() - 1].to_string(),
                         line: token.line,
                         col: token.col,
                     });
@@ -41,11 +41,18 @@ impl Parser {
                             line: next_token.line,
                             col: next_token.col,
                         },
-                        TokenType::IntegerLiteral(int) => ast::Operand::Int {
-                            literal: int.to_owned(),
-                            line: next_token.line,
-                            col: next_token.col,
-                        },
+                        TokenType::IntegerLiteral(int) => {
+                            symbols.push(ast::Symbol {
+                                identifier: int.to_string(),
+                                address: variable_pointer,
+                            });
+                            variable_pointer -= 1;
+                            ast::Operand::Int {
+                                literal: int.to_owned(),
+                                line: next_token.line,
+                                col: next_token.col,
+                            }
+                        }
                         _ => ast::Operand::None,
                     };
                     instruction_pointer += 1;
@@ -72,7 +79,7 @@ impl Parser {
                     });
                     variable_pointer -= 1;
                     statements.push(ast::Statement::Variable {
-                        name: name.to_owned(),
+                        name: name.to_owned()[1..].to_string(),
                         value,
                         line: token.line,
                         col: token.col,
